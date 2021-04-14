@@ -2,10 +2,18 @@ package com.example.vineshthakur_calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 enum Oper {
     NONE,
@@ -46,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
         buttonDot = findViewById(R.id.buttonDot);
         buttonAC = findViewById(R.id.buttonAC);
         result = findViewById(R.id.result);
+
+        SharedPreferences savePref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Boolean isSet = savePref.getBoolean("savepref", false);
+        if (isSet) {
+            result.setText(savePref.getString("result", ""));
+        }
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,6 +190,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 operator = Oper.NONE;
+                SharedPreferences savePref = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                Boolean isSet = savePref.getBoolean("savepref", false);
+                SharedPreferences.Editor editor = savePref.edit();
+                if (isSet) {
+                    editor.putString("result", result.getText().toString());
+                }
+                editor.apply();
             }
         });
         buttonAC.setOnClickListener(new View.OnClickListener() {
@@ -184,5 +205,31 @@ public class MainActivity extends AppCompatActivity {
                 result.setText("");
             }
         });
+    }
+
+    public boolean onCreateOptionsMenu(Menu m) {
+        getMenuInflater().inflate(R.menu.menu, m);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem i) {
+
+        switch(i.getItemId()) {
+            case R.id.about:
+                SharedPreferences savePref = PreferenceManager.getDefaultSharedPreferences(this);
+                Boolean isSet = savePref.getBoolean("savepref", false);
+                Toast.makeText(this, "Vinesh Thakur: JAVA 1001: Save "
+                                + (isSet ? "enabled" : "disabled"),
+                        Toast.LENGTH_LONG).show();
+                break;
+            case R.id.setting:
+                //Update save setting
+                startActivity(new Intent(getApplicationContext(),
+                        SettingsActivity.class));
+                break;
+            default:
+                super.onOptionsItemSelected(i);
+        }
+        return true;
     }
 }

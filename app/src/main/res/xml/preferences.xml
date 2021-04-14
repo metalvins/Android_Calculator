@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="savepref"
+        android:title="Save Result"
+        android:summary="Save the result of calculator"
+        android:defaultValue="true" />
+    <EditTextPreference
+        android:key="result"
+        android:title="Result Value"
+        android:summary="Saved Value"
+        android:defaultValue="" />
+</PreferenceScreen>
