@@ -27,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
         switch (i.getItemId()) {
             case android.R.id.home:
                 SwitchPreference save = (SwitchPreference) settings.findPreference("savepref");
-                if (wasDisabled && save.isEnabled()) {
+                if (wasDisabled && save.isChecked()) {
                     EditTextPreference result = (EditTextPreference) settings.findPreference("result");
                     result.setText(getIntent().getStringExtra("result"));
                     return super.onOptionsItemSelected(i);
