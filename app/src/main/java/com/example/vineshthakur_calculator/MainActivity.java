@@ -228,8 +228,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.setting:
                 //Update save setting
-                startActivity(new Intent(getApplicationContext(),
-                        SettingsActivity.class));
+                Intent intent = new Intent(getApplicationContext(),
+                        SettingsActivity.class);
+                intent.putExtra("result", result.getText().toString());
+                startActivity(intent);
                 break;
             default:
                 super.onOptionsItemSelected(i);
