@@ -172,6 +172,10 @@ public class MainActivity extends AppCompatActivity {
         buttonE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(result.getText().toString().equals("")) {
+                    result.setText("0.0");
+                }
+                String s = result.getText().toString();
                 val2 = Float.parseFloat(result.getText() + "");
                 switch(operator) {
                     case ADD:
